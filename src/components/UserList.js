@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Grid from './Grid';
 import './UserList.css';
-import { API_URL, ERROR_MSG, LOADING_MSG, SEARCH_TEXT } from '../constants';
+import { API_URL, ERROR_MSG, LOADING_MSG, SEARCH_TEXT, SUCCESS_DELETE_USER, ERROR_DELETE_USER } from '../constants';
 
 const UserList = () => {
   let [users, setUsers] = useState([]);
@@ -12,10 +12,13 @@ const UserList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [searchStr, setSearchStr] = useState('');
+  const [isUserDeleted, setIsUserDeleted] = useState(false);
+  const [isDeleteAction, setIsDeleteAction] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
     setIsLoading(true);
+    setIsDeleteAction(false);
     fetch(API_URL)
       .then(res => res.json())
       .then(res => {
@@ -35,7 +38,18 @@ const UserList = () => {
   };
 
   const onDelete = id => {
-    console.log('onDelete user: ', id);
+    setIsDeleteAction(true);
+    setIsLoading(true);
+    fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+      .then(res => {
+        if (res.ok) {
+          setIsUserDeleted(true);
+        }
+      })
+      .catch(() => {
+        setIsUserDeleted(false);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const onSearch = str => {
@@ -65,7 +79,8 @@ const UserList = () => {
       </div>
 
       <button className="btn-primary btn-lg" onClick={onAddUser}>Add User</button>
-      { isError ? <div className='err-msg loader'>{ERROR_MSG}</div> : '' } 
+      { isDeleteAction ? (isUserDeleted ? <div className='success-msg loader'>{SUCCESS_DELETE_USER}</div> : <div className='err-msg loader'>{ERROR_DELETE_USER}</div>) : '' }
+      { isError ? <div className='err-msg loader'>{ERROR_MSG}</div> : '' }
       { isLoading ? <div className='loader'>{LOADING_MSG}</div> : ''}
       { users.length ?
         <div className='grid-wrapper'>

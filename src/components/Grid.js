@@ -27,7 +27,15 @@ const Grid = props => {
                 </button>
               </td>
               <td>
-                <button type='button' className='btn-danger' onClick={() => props.onDelete(user.id)}>
+                <button
+                  type='button'
+                  className='btn-danger'
+                  onClick={() => {
+                    if (window.confirm(`Are you sure you want to delete: ${user.email} ?`)) {
+                      props.onDelete(user.id);
+                    }
+                  }}
+                >
                   Delete
                 </button>
               </td>
