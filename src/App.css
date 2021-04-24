@@ -1,38 +1,60 @@
-.App {
+button {
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  padding: 6px 10px;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-xl {
+  padding: 15px 20px;
+  font-size: 16px;
+}
+.btn-lg {
+  padding: 10px 15px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background-color: #008CBA;
+  border-color: #008CBA;
+}
+
+.btn-warning {
+  color: #000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-cancel {
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  background-color: #fff;
+}
+
+.success-msg {
+  color: rgb(27, 202, 56);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.err-msg {
+  color: rgb(202, 68, 27);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.loader {
+  margin: 20px;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

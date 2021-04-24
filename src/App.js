@@ -1,24 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import UserList from './components/UserList';
+import CreateUser from './components/CreateUser';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        {/* If we don't use exact here, below paths are never matched */}
+        <Route exact path='/users' component={UserList}></Route>
+        <Route path='/users/create' component={CreateUser}></Route>
+        <Route path='/users/edit/:userId' component={CreateUser}></Route>
+        {/* any route other than above will be redirected to /users */}
+        <Route path='/'><Redirect to='/users' /></Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 

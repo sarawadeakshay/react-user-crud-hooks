@@ -1,0 +1,19 @@
+.form-field {
+  margin: 20px 0;
+}
+
+.input-field {
+  margin-top: 5px;
+}
+
+input {
+  padding: 8px;
+  width: 400px;
+  border: 1px solid #ccc;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 416px;
+}

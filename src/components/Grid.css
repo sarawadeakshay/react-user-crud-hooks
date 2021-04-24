@@ -1,0 +1,13 @@
+.user-list {
+  border-spacing: 0;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px 10px;
+}
+
+tr:nth-child(even) {
+  background-color: #f0eeee;
+}
