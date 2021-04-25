@@ -1,25 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import './CreateUser.css';
 import { API_URL, ERROR_CREATE_USER, LOADING_MSG, SAVING_DATA_MSG, SUCCESS_CREATE_USER } from '../constants';
+import UserConext from "../store/user-context";
 
 const CreateUser = props => {
   const { userId } = useParams();
   const defaultUserState = { first_name: '', last_name: '', email: '' };
   const [user, setUser] = useState(defaultUserState);
-  const [isLoading, setIsLoading] = useState(false);
   const [userCreated, setUserCreated] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const history = useHistory();
+  const ctx = useContext(UserConext);
 
   useEffect(() => {
     if (userId) {
-      setIsLoading(true);
+      ctx.loadingHandler(true);
       fetch(`${API_URL}/${userId}`)
       .then(res => res.json())
       .then(res => setUser(res.data))
       // .catch(() => setIsError(true))
-      .finally(() => setIsLoading(false));
+      .finally(() => ctx.loadingHandler(false));
     }
   }, []);
 
@@ -32,7 +33,7 @@ const CreateUser = props => {
 
   const onSubmit = e => {
     e.preventDefault();
-    setIsLoading(true);
+    ctx.loadingHandler(true);
     setFormSubmitted(true);
     if (userId) {
       updateUser();
@@ -80,7 +81,7 @@ const CreateUser = props => {
       .catch(err => {
         setUserCreated(false);
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => ctx.loadingHandler(false));
   }
   
   const onGoBack = () => {
@@ -90,12 +91,13 @@ const CreateUser = props => {
   return (
     <div className='main-div'>
       <h1>{userId ? 'Edit' : 'Add'} User</h1>
-      { isLoading ? ( userId ? LOADING_MSG : SAVING_DATA_MSG) : ''}
+      { ctx.isLoading ? ( userId ? LOADING_MSG : SAVING_DATA_MSG) : ''}
       {
         formSubmitted ?
           (userCreated ?
             <div className='success-msg'>{user.email} {' ' + SUCCESS_CREATE_USER}</div> :
-            <div className='err-msg'>{ERROR_CREATE_USER}</div>) :
+            <div className='err-msg'>{ERROR_CREATE_USER}</div>
+          ) :
           ''
       }
       <form onSubmit={onSubmit}>
